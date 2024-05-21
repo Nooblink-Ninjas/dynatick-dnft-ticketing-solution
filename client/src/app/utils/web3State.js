@@ -1,15 +1,8 @@
 import { ethers } from "ethers";
-//import abi from "../constants/ABI.json";
-import axios from "axios";
+import abi from "../constants/ABI.json";
 
 export const getWeb3State = async () => {
-  let [contractInstance, selectedAccount, chainId, electionCommisionStatus] = [
-    null,
-    null,
-    null,
-    null,
-    false,
-  ];
+  let [contractInstance, selectedAccount, chainId] = [null, null, null, null];
 
   try {
     if (!window.ethereum) {
@@ -30,24 +23,14 @@ export const getWeb3State = async () => {
     const provider = new ethers.BrowserProvider(window.ethereum);
     // write operation
     const signer = await provider.getSigner();
-    const message = "You accept the terms and conditions for voting dapp";
-    const signature = await signer.signMessage(message);
-    const dataSignature = {
-      signature,
-    };
-    const res = await axios.post(
-      `http://localhost:3000/api/authentication?accountAddress=${selectedAccount}`,
-      dataSignature
-    );
-    electionCommisionStatus = res.data.electionCommisionStatus;
-    localStorage.setItem("token", res.data.token);
-    const contractAddress = "0x30266466Ddb581E19CC8f59F377fE3e67Fe57DeB";
-    //contractInstance = new ethers.Contract(contractAddress, abi, signer);
+
+    // Once you deploy the Ticket.sol in remix.. Paste the contract Address over here
+    const contractAddress = "0x7a365aa65b7e971629c6d8B56ae2649d12F01f93";
+    contractInstance = new ethers.Contract(contractAddress, abi, signer);
     return {
       contractInstance,
       chainId,
       selectedAccount,
-      electionCommisionStatus,
     };
   } catch (error) {
     console.error("Not able to get the web3 state", error.message);

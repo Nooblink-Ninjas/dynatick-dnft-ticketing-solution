@@ -4,6 +4,5 @@ export const handleChainChange = async (setWeb3State) => {
   });
 
   let chainId = parseInt(chainIdHex, 16);
-  console.log(chainId);
   setWeb3State((prevState) => ({ ...prevState, chainId }));
 };

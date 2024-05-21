@@ -11,26 +11,28 @@ const Web3StateProvider = ({children}) => {
     const [web3State, setWeb3State] = useState({
         contractInstance: null,
         chainId: null,
-        selectedAccount: null,
-        electionCommisionStatus: false
+        selectedAccount: null
     })
  
   const handleWallet = async() =>{
     try {
-      const  { contractInstance, chainId, selectedAccount, electionCommisionStatus } = await getWeb3State();
-      setWeb3State({contractInstance,chainId,selectedAccount, electionCommisionStatus});
+      const  { contractInstance, chainId, selectedAccount } = await getWeb3State();
+      setWeb3State({contractInstance,chainId,selectedAccount});
     } catch (error) {
       console.error("Wallet connection failed", error.message);
     }
   }
 
   useEffect(()=>{
+    if (window.ethereum) {
     window.ethereum.on('accountsChanged',()=>handleAccountChange(setWeb3State))
     window.ethereum.on('chainChanged',()=>handleChainChange(setWeb3State))
     
     return()=>{
         window.ethereum.removeListener('accountsChanged',()=>handleAccountChange(setWeb3State))
         window.ethereum.removeListener('accountsChanged',()=>handleAccountChange(setWeb3State))
+    }} else {
+      console.log("Please configure a wallet");
     }
   },[])
 

@@ -4,6 +4,5 @@ export const handleAccountChange = async (setWeb3State) => {
   });
 
   let selectedAccount = accounts[0];
-  console.log(selectedAccount);
   setWeb3State((prevState) => ({ ...prevState, selectedAccount }));
 };
