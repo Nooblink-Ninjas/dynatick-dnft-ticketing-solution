@@ -3,6 +3,8 @@
 import { ethers } from "ethers";
 import {useWeb3Context} from './context/useWeb3Context';
 import { useState } from "react";
+import backgroundImage from '../../public/images/background.jpg';
+import progressGif from '../../public/images/waitingimage.gif'
 
 export default function Home() {
   const {handleWallet, web3State} = useWeb3Context();
@@ -12,9 +14,7 @@ export default function Home() {
   const [transactionDetails, setTransactionDetails] = useState({});
   const [isPaid, setIsPaid] = useState(false);
   const [isWinner, setIsWinner] = useState(false);
-  let backgroundUrl = window.location.origin +"/images/background.jpg";
-  let progressGif  =  window.location.origin +"/images/waitingimage.gif";
-  
+
   const TICKET_PRICE = 20;
 
  /**
@@ -99,7 +99,7 @@ export default function Home() {
   return (
     <>
       <section className="bg-center bg-no-repeat bg-gray-700 bg-blend-multiply min-h-screen"
-          style={{backgroundImage: "url(" + backgroundUrl + ")" }}>
+          style={{backgroundImage: "url(" + backgroundImage.src + ")" }}>
           <div className="px-4 mx-auto max-w-screen-xl text-center py-24 ">
             <div className="landing-box-background py-5 bg-opacity-10">
               <h3 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-color-white ">Manchester City v Manchester United Tickets</h3>
@@ -131,7 +131,7 @@ export default function Home() {
               ):
               (
                 <div className="flex justify-center items-center">
-                    <img src={progressGif} alt="processingscreen"  width="250" />
+                    <img src={progressGif.src} alt="processingscreen"  width="250" />
                  </div>
               )}  
               {
