@@ -1,6 +1,9 @@
 import { ethers } from "ethers";
 import abi from "../constants/ABI.json";
-
+/**
+ * Creates the contract instance
+ * @returns contract instance, selected account and the chain id
+ */
 export const getWeb3State = async () => {
   let [contractInstance, selectedAccount, chainId] = [null, null, null, null];
 
@@ -19,13 +22,12 @@ export const getWeb3State = async () => {
 
     chainId = parseInt(chainIdHex, 16);
     selectedAccount = accounts[0];
-    // read operation
+
     const provider = new ethers.BrowserProvider(window.ethereum);
-    // write operation
     const signer = await provider.getSigner();
 
     // Once you deploy the Ticket.sol in remix.. Paste the contract Address over here
-    const contractAddress = "0x7a365aa65b7e971629c6d8B56ae2649d12F01f93";
+    const contractAddress = "0x415ae9fF565A68208B31BB5E038024621Fa18FcB";
     contractInstance = new ethers.Contract(contractAddress, abi, signer);
     return {
       contractInstance,

@@ -1,5 +1,7 @@
 import "./globals.css";
-import Web3StateProvider from './context/Web3StateProvider'
+import Web3StateProvider from './context/Web3StateProvider';
+import Header from './components/Header/page';
+import Footer from "./components/Footer/page";
 
 export default function RootLayout({ children }) {
  
@@ -7,7 +9,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
           <Web3StateProvider>
-              {children}           
+              <Header />
+    
+                    {children}  
+                 
+              <Footer />      
           </Web3StateProvider>
       </body>      
     </html>

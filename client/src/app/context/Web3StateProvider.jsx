@@ -32,7 +32,7 @@ const Web3StateProvider = ({children}) => {
         window.ethereum.removeListener('accountsChanged',()=>handleAccountChange(setWeb3State))
         window.ethereum.removeListener('accountsChanged',()=>handleAccountChange(setWeb3State))
     }} else {
-      console.log("Please configure a wallet");
+      console.log("Wallet is not installed");
     }
   },[])
 

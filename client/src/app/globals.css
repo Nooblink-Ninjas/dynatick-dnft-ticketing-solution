@@ -11,12 +11,16 @@
   color: #E9E9EB;
 }
 
-.header-text{
+.text-color-red{
   color: #EF4B4C;
 }
 
 .border-red{
   color: #EF4B4C;
+}
+
+.border-white{
+  color: #E9E9EB;
 }
 
 .landing-box-background{
