@@ -17,10 +17,10 @@ interface PriceConverterInterface {
 
 /// @notice Interface to interact with MetaDataGenerator.sol
 interface NFTMetaDataGeneratorInterface {
-    function generateMetaData(uint256 _randomNumber,  uint256 tokenId) external pure returns (string memory);
+    function generateMetaData(uint256 _randomNumber,  uint256 tokenId, string memory _score) external pure returns (string memory);
 }
 
- /**
+/**
     @title This contract implements a ticketing system that uses Chainlink Price Feed and VRF. 
     @author Minal Abayasekara
 */
@@ -73,8 +73,7 @@ contract Ticket is ERC721, ERC721URIStorage, VRFConsumerBaseV2Plus {
     uint256 internal lastRequestId;
 
     /// @notice Polygon Amoy coordinator parameters
-    bytes32 immutable private keyHash =
-        0x816bedba8a50b294e5cbd47842baf240c2385f2eaf719edbd4f250a137a8c899;
+    bytes32 immutable private keyHash = 0x816bedba8a50b294e5cbd47842baf240c2385f2eaf719edbd4f250a137a8c899;
     uint32 immutable private callbackGasLimit = 2500000;
     uint16 immutable private requestConfirmations = 3;
     uint32 immutable private numWords = 2;
@@ -121,7 +120,7 @@ contract Ticket is ERC721, ERC721URIStorage, VRFConsumerBaseV2Plus {
         @param _nftMetaDataAddress NFT Meta Data Generator contract address
         @param _priceConverterAddress Price Converter contract address
      */
-    constructor(uint256 _subscriptionId, address _nftMetaDataAddress, address _priceConverterAddress) ERC721("Chainlink FootBall 2024", "CIFA")
+    constructor(uint256 _subscriptionId, address _nftMetaDataAddress, address _priceConverterAddress) ERC721("Chainlink Superliga FootBall 2024", "CSF")
     VRFConsumerBaseV2Plus(vr_coordinator) {
          COORDINATOR = IVRFCoordinatorV2Plus(
             vr_coordinator
@@ -191,7 +190,7 @@ contract Ticket is ERC721, ERC721URIStorage, VRFConsumerBaseV2Plus {
         uint256 randomNumber = random1 ^ random2;
         uint256 tokenId = tokenIdCounter.current();
     
-        string memory finalTokenURI = nftMetaData.generateMetaData(randomNumber, tokenId);
+        string memory finalTokenURI = nftMetaData.generateMetaData(randomNumber, tokenId, "Match not started");
        
         address userAddr = ticketOwnerAddressMapping[_requestId];        
         tokenIdCounter.increment();
@@ -226,7 +225,7 @@ contract Ticket is ERC721, ERC721URIStorage, VRFConsumerBaseV2Plus {
 
     /** 
       @notice Handles the transactions
-      @param _buyerAddress The buyer's waller address
+      @param _buyerAddress The buyer's wallet address
     */
     function confirmTransaction(address _buyerAddress) external payable {
          require(msg.value > 0, "There was a problem fetching the price. Please try again");
@@ -240,6 +239,18 @@ contract Ticket is ERC721, ERC721URIStorage, VRFConsumerBaseV2Plus {
        require(address(this).balance > 0, "Your account balance is currently zero. Please make sure you have enough funds in your account before attempting to withdraw.");
        payable(eventOwner).transfer(address(this).balance);
    }
+
+    /** 
+      @notice Update the NFT meta data
+      @param _score Score of the football event
+    */
+    function updateMetaData(string memory _score) external {
+        uint256 tokenId = tokenIdCounter.current()-1;
+        for (uint i = 0 ; i <= tokenId ; i++){
+            string memory updatedTokenURI = nftMetaData.generateMetaData(listOfNftDetails[i].finalRandomNum, i, _score);
+             _setTokenURI(i, updatedTokenURI);  
+        }    
+    }
 
     /// @notice Retrieve the status of the chainlink VRF
     function getRequestStatus(

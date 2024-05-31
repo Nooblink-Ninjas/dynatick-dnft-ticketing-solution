@@ -6,5 +6,16 @@ const DATA_SOURCE_URL =
 export async function GET() {
   const res = await fetch(DATA_SOURCE_URL);
   const finalResponse = await res.json();
-  return NextResponse.json(finalResponse.data);
+  const filteredData = finalResponse.data[0];
+
+  let scoreOfEachTeam = filteredData.scores
+    .filter((entry) => entry.description == "CURRENT")
+    .map((entry) => entry.score);
+  const formattedScoreObj = scoreOfEachTeam.map((e) => e.goals).join("/");
+
+  let filteredResults = {
+    result: filteredData.result_info + " With a score of "+formattedScoreObj,
+  };
+
+  return NextResponse.json(filteredResults);
 }
