@@ -74,7 +74,7 @@ contract TriggerUpdateTicket is AutomationCompatibleInterface, FunctionsClient {
     /// @notice JavaScript source code to fetch the score
     string internal source =
         "const apiResponse = await Functions.makeHttpRequest({"
-        "url: `https://test-project-git-main-minimenus-projects.vercel.app/api/football`"
+        "url: `https://dynatick-dnft-ticketing-solution.vercel.app/api/football`"
         "});"
         "if (apiResponse.error) {"
         "throw Error('Request failed');"
