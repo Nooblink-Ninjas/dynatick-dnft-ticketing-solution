@@ -27,7 +27,7 @@ export const getWeb3State = async () => {
     const signer = await provider.getSigner();
 
     // Once you deploy the Ticket.sol in remix.. Paste the contract Address over here
-    const contractAddress = "0x415ae9fF565A68208B31BB5E038024621Fa18FcB";
+    const contractAddress = "0x3f50Ef90bb11b3272d3ade7e3528153cC5CaD5eD";
     contractInstance = new ethers.Contract(contractAddress, abi, signer);
     return {
       contractInstance,

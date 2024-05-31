@@ -104,7 +104,7 @@ export default function Home() {
             <div className="landing-box-background py-5 bg-opacity-10">
               <h3 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-color-white ">Superliga: Randers vs Viborg</h3>
               <p className="mb-8 text-lg font-normal text-gray-300 text-color-red">Cepheus Park Randers, Viborgvej 92, 8920 Randers, Denmark</p>
-              <h3 className="mb-4 text-xl font-bold tracking-tight leading-none text-color-white ">Wednesday, 15 May 2024 16:00</h3>
+              <h3 className="mb-4 text-xl font-bold tracking-tight leading-none text-color-white ">Wednesday, 15 May 2024 16:00 onwards</h3>
               <p className="mb-4 text-lg font-normal text-gray-300 text-color-red"> From 20.00 USD</p>
               {!loading ? (
                   <div className="flex space-y-4 flex-row justify-center">
